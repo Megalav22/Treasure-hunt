@@ -1,0 +1,72 @@
+/*Rohan and his team are participating in the Treasure Hunt event of college in which in each step they have to solve one problem to get a clue of Treasure location . Rohan’s team has performed very well and reached the final step where they have to provide a code of a problem to get a final clue about treasure .
+
+Given a string s, they need to find the longest palindromic subsequence’s length in s.
+A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+
+The string contains only lowercase letters.
+
+Write a program to help Rohan’s team that takes in input as String x and returns the length of the longest palindromic subsequence of x.
+
+Input Specification:
+input1: string input
+
+Output Specification:
+Return the length of the longest palindromic subsequence
+
+Example 1:
+Input: s = “bbbab”
+Output: 4
+Explanation: One possible longest palindromic subsequence is “bbbb”.
+
+Example 2:
+Input: s = “cbbd”
+Output: 2
+Explanation: One possible longest palindromic subsequence is “bb”.
+*/
+
+
+
+
+
+import java.io.*;
+import java.util.Scanner;
+
+public class LongPalindromeLength {
+	
+	static int maxlength(int x,int y) {
+		return (x>y)?x:y;
+	}
+	
+	static int lps(String str) {
+		int n=str.length();
+		int i,j,k;
+		int dp[][]=new int[n][n];
+		for(i=0;i<n;i++) {
+			dp[i][i]=1;
+		}
+		for(k=2;k<=n;k++) {
+			for(i=0;i<n-k+1;i++) {
+				j=i+k-1;
+				if (str.charAt(i)==str.charAt(j) && k==2) {
+					dp[i][j]=2;
+				}
+				else if(str.charAt(i)==str.charAt(j)) {
+					dp[i][j]=dp[i+1][j-1]+2;
+				}
+				else
+				{
+					dp[i][j]=maxlength(dp[i][j-1],dp[i+1][j]);
+					
+				}
+			}
+		}
+		return dp[0][n-1];
+	}
+
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in);
+		String str=sc.next();
+		int n=str.length();
+		 System.out.println("" +lps(str));		
+	}
+}
